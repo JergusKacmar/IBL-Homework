@@ -1,0 +1,26 @@
+@if (weatherForecast()) { @if (weatherForecast()?.error) {
+  <div
+    class="text-red-900 p-4 rounded-lg font-bold bg-red-200 border border-red-300"
+  >
+    Error, please try different input ({{ weatherForecast()?.error?.message }}).
+  </div>
+} @else {
+    <div class="flex flex-col gap-2">
+  @for (item of weatherForecast()?.result; track item.placeId) {
+    <div
+      class="text-slate-900 bg-slate-200 rounded-lg font-bold p-4 border border-slate-300 flex flex-col md:flex-row gap-4 md:gap-8"
+    >
+      <div class="min-w-20">{{ item.stationId }}</div>
+      <div class="min-w-40">{{ item.reportTime | date : "short" }}</div>
+      <div class="min-w-20">{{ item.queryType }}</div>
+      <div [innerHTML]="item.textHTML"></div>
+    </div>
+  } @empty {
+    <div
+      class="text-orange-900 bg-orange-200 p-4 rounded-lg font-bold border border-orange-300"
+    >
+      There are no items, please try different input.
+    </div>
+  }
+  </div>
+} } @else if (weatherForecast() === null) { Loading... }

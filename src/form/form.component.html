@@ -1,0 +1,76 @@
+<form [formGroup]="form" class="flex flex-col gap-4 text-slate-900">
+  <section formGroupName="reportTypes" class="flex flex-row gap-12">
+    <label class="min-w-32 -mr-12 inline-block">Report Type: </label>
+    <div>
+      <input type="checkbox" id="metar" formControlName="metar" />
+      <label for="metar"> METAR</label>
+    </div>
+
+    <div>
+      <input type="checkbox" id="sigmet" formControlName="sigmet" />
+      <label for="sigmet"> SIGMET</label>
+    </div>
+
+    <div>
+      <input type="checkbox" id="taf" formControlName="taf" />
+      <label for="taf"> TAF</label>
+    </div>
+
+    @if (attemptedSubmit && form.get('reportTypes')?.hasError('atLeastOneChecked')) {
+      <div class="text-red-600">* At least one report type must be selected.</div>
+    }
+  </section>
+
+  <section>
+    <label for="first-name" class="min-w-32 inline-block">Airports: </label>
+    <input
+      id="first-name"
+      type="text"
+      formControlName="stations"
+      class="rounded-lg border border-slate-300 min-w-80"
+    />
+    @if (attemptedSubmit && form.get('stations')?.hasError('substringLength')) {
+      <div class="text-red-600">
+        * Each airport must be exactly
+        {{
+            form.get("stations")?.errors?.['substringLength'].requiredLength
+        }}
+        characters long and separated by a space.
+      </div>
+    }
+  </section>
+
+  <section>
+    <label for="last-name" class="min-w-32 inline-block">Countries: </label>
+    <input
+      id="last-name"
+      type="text"
+      formControlName="countries"
+      class="rounded-lg border border-slate-300 min-w-80"
+    />
+    @if (attemptedSubmit && form.get('countries')?.hasError('substringLength'))
+    {
+      <div class="text-red-600">
+        * Each country must be exactly
+        {{
+          form.get("countries")?.errors?.['substringLength'].requiredLength
+        }}
+        characters long and separated by a space.
+      </div>
+    }
+  </section>
+
+  @if (attemptedSubmit && form.hasError('atLeastOneTruthy')) {
+    <div class="text-red-600">
+      * At least one airport or country must be provided.
+    </div>
+  }
+
+  <button
+    type="submit"
+    (click)="submit()"
+    class="border border-slate-300 rounded-lg hover:bg-slate-300 bg-slate-200 px-4 py-1 w-fit"
+  >
+    Create Briefing
+  </button>
+</form>
