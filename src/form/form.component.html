@@ -1,5 +1,5 @@
 <form [formGroup]="form" class="flex flex-col gap-4 text-slate-900">
-  <section formGroupName="reportTypes" class="flex flex-row gap-12">
+  <section formGroupName="reportTypes" class="flex flex-row gap-8 sm:gap-12">
     <label class="min-w-32 -mr-12 inline-block">Report Type: </label>
     <div>
       <input type="checkbox" id="metar" formControlName="metar" />
@@ -21,7 +21,7 @@
     }
   </section>
 
-  <section>
+  <section class="flex flex-col sm:flex-row">
     <label for="first-name" class="min-w-32 inline-block">Airports: </label>
     <input
       id="first-name"
@@ -40,7 +40,7 @@
     }
   </section>
 
-  <section>
+  <section class="flex flex-col sm:flex-row">
     <label for="last-name" class="min-w-32 inline-block">Countries: </label>
     <input
       id="last-name"
